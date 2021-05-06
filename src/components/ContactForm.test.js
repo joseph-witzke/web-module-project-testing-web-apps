@@ -27,14 +27,14 @@ test('renders ONE error message if user enters less then 5 characters into first
     
 
     // Act: Select name input field and enter first name less than 5 characters.
-    const nameInput = screen.getByLabelText(/firstname/i);
+    const nameInput = screen.getByLabelText(/first name*/i);
     userEvent.type(nameInput, "Joe");
 
     //Assert: there will be an error message displayed.
-    const errorDisplay = await screen.findByText("Joe");
-    // expect(nameInput).toBeInTheDocument();
-    // expect(nameInput).toHaveValue("Joe")
-    expect(errorDisplay).toEqual("firstName must have at least 5 characters.");
+    // const errorDisplay = await screen.findByText(/error/i);
+    // expect(errorDisplay).toEqual("firstName must have at least 5 characters.");
+    const InputError = await screen.findByText(/Error/i);
+    expect(InputError).toBeInTheDocument();
 });
 
 test('renders THREE error messages if user enters no values into any fields.', async () => {
