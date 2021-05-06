@@ -27,7 +27,7 @@ test('renders ONE error message if user enters less then 5 characters into first
     
 
     // Act: Select name input field and enter first name less than 5 characters.
-    const nameInput = screen.getByLabelText(/first name*/i);
+    const nameInput = screen.getByLabelText(/first name/i);
     userEvent.type(nameInput, "Joe");
 
     //Assert: there will be an error message displayed.
@@ -42,7 +42,23 @@ test('renders THREE error messages if user enters no values into any fields.', a
 });
 
 test('renders ONE error message if user enters a valid first name and last name but no email.', async () => {
-    
+    //Arrange: Render component.
+    render(<ContactForm/>)
+
+    //Act: User selects firstname and lastname inputs and enters a valid value, but selects and clicks submit without adding valid email.
+    const nameInput = screen.getByLabelText(/first name/i);
+    userEvent.type(nameInput, "Joseph");
+
+    const lastInput = screen.getByLabelText(/last name/i);
+    userEvent.type(lastInput, "Witzke");
+
+    const button = screen.getByRole("button");
+    userEvent.click(button);
+
+    //Assert
+    const subError1 = await screen.findByText(/Error/i);
+    expect(subError1).toBeInTheDocument();
+
 });
 
 test('renders "email must be a valid email address" if an invalid email is entered', async () => {
